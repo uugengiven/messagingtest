@@ -9,6 +9,8 @@ namespace MVCWriteEvents.Controllers
 {
     public class ClientsController : ApiController
     {
+        MessageSender messages = new MessageSender();
+
         // GET api/<controller>
         public IEnumerable<string> Get()
         {
@@ -22,14 +24,12 @@ namespace MVCWriteEvents.Controllers
         }
 
         // POST api/<controller>
-        public void Post([FromBody]string value)
+        public void Post([FromBody]PostModel model)
         {
+            // Payload should be everything needed - the controller controls which message queue it hits
+            messages.Send("ClientCreated", model.Payload);
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
 
         // DELETE api/<controller>/5
         public void Delete(int id)
