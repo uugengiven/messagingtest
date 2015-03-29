@@ -1,0 +1,8 @@
+﻿{
+"DelayBetweenCalls":"2",
+"Calls":[
+    {"Url":"http://localhost:50123/api/clients", "Payload":"Some little bit of stuff"}, 
+    {"Url":"http://localhost:50123/api/clients", "Payload":"Is this thing working?"}, 
+    {"Url":"http://localhost:50123/api/clients", "Payload":"WhatIfSpacesFail"}
+]
+}

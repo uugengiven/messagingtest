@@ -9,18 +9,12 @@ namespace MVCWriteEvents.Controllers
 {
     public class ClientsController : ApiController
     {
-        MessageSender messages = new MessageSender();
+        IMessageSender messages = new RabbitMessageSender(); // inject this at some point
 
         // GET api/<controller>
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<controller>/5
-        public string Get(int id)
-        {
-            return "value";
         }
 
         // POST api/<controller>
@@ -30,10 +24,5 @@ namespace MVCWriteEvents.Controllers
             messages.Send("ClientCreated", model.Payload);
         }
 
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
-        }
     }
 }

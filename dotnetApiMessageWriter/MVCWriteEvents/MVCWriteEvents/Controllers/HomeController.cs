@@ -14,5 +14,6 @@ namespace MVCWriteEvents.Controllers
 
             return View();
         }
+
     }
 }
