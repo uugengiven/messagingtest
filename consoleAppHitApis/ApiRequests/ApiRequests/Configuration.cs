@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApiRequests
 {
+
     class Configuration
     {
         public int DelayBetweenCalls { get; set; }

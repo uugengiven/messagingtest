@@ -35,10 +35,14 @@ namespace ApiRequests
         {
             Configuration _config = new Configuration();
 
-            _config.DelayBetweenCalls = 2;
-            _config.Calls.Add(new ApiCall("http://localhost:50123/api/clients", "payload=Some little bit of stuff"));
+            _config.DelayBetweenCalls = 1;
+            _config.Calls.Add(new ApiCall("http://localhost:50123/api/clients", "payload=<xml><node>Some little bit of stuff</node></xml>"));
+            _config.Calls.Add(new ApiCall("http://localhost:50123/api/clients", "payload=<xml><node>Some little bitanother call to see if it works</node></xml>"));
+            _config.Calls.Add(new ApiCall("http://localhost:50123/api/CCS", "payload=adding a library"));
             _config.Calls.Add(new ApiCall("http://localhost:50123/api/clients", "payload=another call to see if it works"));
-            _config.Calls.Add(new ApiCall("http://localhost:50123/api/clients", "payload=seeifineedtoavoidspaces"));
+            _config.Calls.Add(new ApiCall("http://localhost:50123/api/CCS", "payload=<xml><node>another call to see if it works</node></xml>"));
+            _config.Calls.Add(new ApiCall("http://localhost:50123/api/CCS", "payload=seeifineedtoavoidspaces"));
+            _config.Calls.Add(new ApiCall("http://localhost:50123/api/clients", "payload=another call to see if it works"));
 
             return _config;
         }
