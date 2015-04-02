@@ -14,7 +14,7 @@ namespace MVCWriteEvents.Controllers
         public void Post([FromBody]PostModel model)
         {
             // Payload should be everything needed - the controller controls which message queue it hits
-            messages.Send("LibraryCreated", model.Payload);
+            messages.Send("adminportal.librarycreated", model.Payload);
         }
     }
 }

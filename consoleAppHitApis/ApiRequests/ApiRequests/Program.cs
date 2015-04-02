@@ -12,12 +12,17 @@ namespace ApiRequests
         static void Main(string[] args)
         {
             var config = setup();
-            foreach (ApiCall call in config.Calls)
-            {
-                postToApi(call.Url, call.Payload);
-                System.Threading.Thread.Sleep(config.DelayBetweenCalls * 1000);
-            }
 
+            for (int i = 0; i < 1000; i++)
+            {
+
+                foreach (ApiCall call in config.Calls)
+                {
+                    postToApi(call.Url, call.Payload);
+                    //System.Threading.Thread.Sleep(config.DelayBetweenCalls * 75);
+                }
+
+            }
             while (true)
             {
 

@@ -12,17 +12,17 @@ namespace EventListener
     class Program
     {
 
-        static void Listen(string Topic, CancellationToken ct)
+        static void Listen(string QueueName, CancellationToken ct)
         {
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
             {
                 using (var channel = connection.CreateModel())
                 {
-                    channel.QueueDeclare(Topic, false, false, false, null);
+                    //channel.QueueDeclare(Topic, false, false, false, null);
 
                     var consumer = new QueueingBasicConsumer(channel);
-                    channel.BasicConsume(Topic, true, consumer);
+                    channel.BasicConsume(QueueName, false, consumer);
 
                     Console.WriteLine(" [*] Waiting for messages." +
                                              "To exit press CTRL+C");
@@ -34,7 +34,8 @@ namespace EventListener
                         {
                             var body = ea.Body;
                             var message = Encoding.UTF8.GetString(body);
-                            Console.WriteLine(" [x] {1} Received {0}", message, Topic);
+                            Console.WriteLine(" [x] {1} Received {0}", message, QueueName);
+                            channel.BasicAck(ea.DeliveryTag, false);
                         }
                     }
                 }
@@ -46,8 +47,9 @@ namespace EventListener
             var ts = new CancellationTokenSource();
             CancellationToken ct = ts.Token;
 
-            Task.Factory.StartNew(() => Listen("ClientCreated", ct));
-            Task.Factory.StartNew(() => Listen("LibraryCreated", ct));
+            Task.Factory.StartNew(() => Listen("listener1", ct));
+            Task.Factory.StartNew(() => Listen("listener2", ct));
+            Task.Factory.StartNew(() => Listen("listener1", ct));
             while (true)
             {
                 var exit = Console.ReadLine();

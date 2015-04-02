@@ -21,11 +21,13 @@ namespace MVCWriteEvents
             {
                 using (var channel = connection.CreateModel())
                 {
-                    channel.QueueDeclare(Topic, false, false, false, null);
+                    var properties = channel.CreateBasicProperties();
+                    //channel.QueueDeclare(Topic, false, false, false, null);
 
                     var body = Encoding.UTF8.GetBytes(Payload);
 
-                    channel.BasicPublish("", Topic, null, body);
+                    properties.DeliveryMode = 2;
+                    channel.BasicPublish("default", Topic, properties, body);
                     Console.WriteLine(" [x] Sent {0}", Payload);
                 }
             }
