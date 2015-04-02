@@ -50,6 +50,11 @@ namespace EventListener
             Task.Factory.StartNew(() => Listen("listener1", ct));
             Task.Factory.StartNew(() => Listen("listener2", ct));
             Task.Factory.StartNew(() => Listen("listener1", ct));
+            Task.Factory.StartNew(() => Listen("listener3", ct));
+            Task.Factory.StartNew(() => Listen("listener4", ct));
+            Task.Factory.StartNew(() => Listen("listener5", ct));
+            Task.Factory.StartNew(() => Listen("listener5", ct));
+            Task.Factory.StartNew(() => Listen("listener5", ct)); 
             while (true)
             {
                 var exit = Console.ReadLine();

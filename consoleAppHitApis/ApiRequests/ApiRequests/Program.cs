@@ -13,16 +13,13 @@ namespace ApiRequests
         {
             var config = setup();
 
-            for (int i = 0; i < 1000; i++)
+
+            foreach (ApiCall call in config.Calls)
             {
-
-                foreach (ApiCall call in config.Calls)
-                {
-                    postToApi(call.Url, call.Payload);
-                    //System.Threading.Thread.Sleep(config.DelayBetweenCalls * 75);
-                }
-
+                postToApi(call.Url, call.Payload);
+                //System.Threading.Thread.Sleep(config.DelayBetweenCalls * 75);
             }
+
             while (true)
             {
 
@@ -38,17 +35,40 @@ namespace ApiRequests
 
         static Configuration setup()
         {
+            string baseUrl = "http://localhost:50123/api/";
+            string[] types = new string[] {"clients", "CCS", "communications", "workflow"};
+            string filename = "big.txt";
+            int linespermessage = 8;
+            int i = 0;
+            int type = 0;
+            Random rnd = new Random();
+
+
             Configuration _config = new Configuration();
 
-            _config.DelayBetweenCalls = 1;
-            _config.Calls.Add(new ApiCall("http://localhost:50123/api/clients", "payload=<xml><node>Some little bit of stuff</node></xml>"));
-            _config.Calls.Add(new ApiCall("http://localhost:50123/api/clients", "payload=<xml><node>Some little bitanother call to see if it works</node></xml>"));
-            _config.Calls.Add(new ApiCall("http://localhost:50123/api/CCS", "payload=adding a library"));
-            _config.Calls.Add(new ApiCall("http://localhost:50123/api/clients", "payload=another call to see if it works"));
-            _config.Calls.Add(new ApiCall("http://localhost:50123/api/CCS", "payload=<xml><node>another call to see if it works</node></xml>"));
-            _config.Calls.Add(new ApiCall("http://localhost:50123/api/CCS", "payload=seeifineedtoavoidspaces"));
-            _config.Calls.Add(new ApiCall("http://localhost:50123/api/clients", "payload=another call to see if it works"));
+            var file = new System.IO.StreamReader(filename);
+            string lines;
 
+            // set up about 3000 calls, randomly
+
+
+            for (int j = 0; j < 3000; j++)
+            {
+                lines = "payload=some stuff";
+                for (i = 0; i < linespermessage; i++ )
+                {
+                    lines += file.ReadLine();
+                }
+                type = rnd.Next(0, types.Length);
+
+                _config.Calls.Add(new ApiCall(baseUrl + types[type], lines));
+
+            }
+
+
+            _config.DelayBetweenCalls = 30; //ms
+            file.Close();
+            file.Dispose();
             return _config;
         }
         

@@ -15,6 +15,7 @@ namespace MVCWriteEvents.Controllers
         {
             // Payload should be everything needed - the controller controls which message queue it hits
             messages.Send("adminportal.librarycreated", model.Payload);
+            messages.Send("CCS.librarycreated", model.Payload);
         }
     }
 }
